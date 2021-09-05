@@ -1,0 +1,39 @@
+apply plugin: 'maven-publish'
+
+ext {
+    PUBLISH_GROUP_ID = "com.github.panicDev"
+    PUBLISH_VERSION = "0.1.0"
+}
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier "sources"
+}
+
+afterEvaluate { project ->
+
+    publishing {
+
+        publications {
+            release(MavenPublication) {
+                groupId PUBLISH_GROUP_ID
+                artifactId 'lo-co'
+                version PUBLISH_VERSION
+
+                from components.release
+
+                task sourcesJar(type: Jar, dependsOn: classes) {
+                    getArchiveClassifier().set('sources')
+
+                    from sourceSets.main.allSource
+                }
+
+                artifact sourcesJar
+            }
+        }
+
+        repositories {
+            mavenLocal()
+        }
+    }
+}

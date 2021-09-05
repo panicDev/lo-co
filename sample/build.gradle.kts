@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":location-coroutines"))
+    implementation(project(":loco"))
 
     implementation(Kotlin.stdlib)
     implementation(AndroidX.appCompat)
